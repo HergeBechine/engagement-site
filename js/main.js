@@ -4,11 +4,11 @@
    ============================================================ */
 
 const CONFIG = {
-  groom: "待定",              // ← 新郎姓名
-  bride: "待定",              // ← 新娘姓名
-  dateLabel: "喜宴日期 · 待定", // ← 公历日期（封面 + 吉日卡片）
-  dateLunar: "农历待定",       // ← 农历日期（盟书 + 吉日卡片）
-  coupleLine: "待定 & 待定"    // ← 页脚显示的名字
+  groom: "彭锦豪",            // ← 新郎姓名
+  bride: "张鑫雨",            // ← 新娘姓名
+  dateLabel: "阳历九月十二日", // ← 公历日期（封面 + 吉日卡片）
+  dateLunar: "农历八月初二",   // ← 农历日期（盟书 + 吉日卡片）
+  coupleLine: "彭锦豪 & 张鑫雨" // ← 页脚显示的名字
 };
 
 /* ---------- 填充占位文字 ---------- */
@@ -78,83 +78,3 @@ document.querySelectorAll(".split").forEach(el => {
     hero.appendChild(p);
   }
 })();
-
-/* ---------- 祝福留言（保存在本机 localStorage） ---------- */
-const wishForm = document.getElementById("wishForm");
-const wishName = document.getElementById("wishName");
-const wishText = document.getElementById("wishText");
-const wishList = document.getElementById("wishList");
-const STORE_KEY = "engagement_wishes_v1";
-
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
-}
-
-function renderWish(w) {
-  const li = document.createElement("li");
-  li.className = "wish-item";
-  const who = escapeHtml(w.name || "匿名");
-  const txt = escapeHtml(w.text);
-  const time = escapeHtml(w.time || "");
-  li.innerHTML = `<span class="wish-time">${time}</span><span class="wish-who">${who}：</span>${txt}`;
-  return li;
-}
-
-function loadWishes() {
-  let list = [];
-  try { list = JSON.parse(localStorage.getItem(STORE_KEY)) || []; } catch (e) { list = []; }
-  wishList.innerHTML = "";
-  if (!list.length) {
-    const li = document.createElement("li");
-    li.className = "wish-empty";
-    li.textContent = "还没有祝福，来写下第一条吧～";
-    wishList.appendChild(li);
-    return;
-  }
-  list.forEach(w => wishList.appendChild(renderWish(w)));
-}
-
-wishForm.addEventListener("submit", e => {
-  e.preventDefault();
-  const name = wishName.value.trim();
-  const text = wishText.value.trim();
-  if (!text) return;
-  let list = [];
-  try { list = JSON.parse(localStorage.getItem(STORE_KEY)) || []; } catch (err) { list = []; }
-  const now = new Date();
-  const pad = n => String(n).padStart(2, "0");
-  list.unshift({
-    name,
-    text,
-    time: `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`
-  });
-  try { localStorage.setItem(STORE_KEY, JSON.stringify(list.slice(0, 50))); } catch (err) {}
-  wishForm.reset();
-  loadWishes();
-  burstHearts(wishForm);
-});
-
-/* 送出祝福时的心形迸发 */
-function burstHearts(anchor) {
-  const r = anchor.getBoundingClientRect();
-  const glyphs = ["♥", "♡", "❤"];
-  for (let i = 0; i < 10; i++) {
-    const h = document.createElement("span");
-    h.textContent = glyphs[i % 3];
-    h.style.cssText =
-      `position:fixed;left:${r.left + r.width / 2}px;top:${r.top + r.height / 2}px;` +
-      `font-size:${12 + Math.random() * 14}px;color:#c9412f;pointer-events:none;z-index:999;` +
-      `transform:translate(-50%,-50%);opacity:1;` +
-      `transition:all ${(1 + Math.random() * 0.8).toFixed(2)}s cubic-bezier(.22,.61,.36,1);`;
-    document.body.appendChild(h);
-    requestAnimationFrame(() => {
-      h.style.transform =
-        `translate(${(Math.random() * 160 - 80).toFixed(0)}px, ${(-60 - Math.random() * 120).toFixed(0)}px) ` +
-        `rotate(${(Math.random() * 180 - 90).toFixed(0)}deg)`;
-      h.style.opacity = "0";
-    });
-    setTimeout(() => h.remove(), 2400);
-  }
-}
-
-loadWishes();

@@ -304,50 +304,6 @@ section{position:relative;padding:clamp(4.5rem,10vw,7.5rem) clamp(1.2rem,6vw,3re
 .detail-main{font-family:var(--font-kai);font-size:1.6rem;letter-spacing:.16em;color:var(--ink)}
 .detail-sub{color:var(--ink-soft);font-size:.9rem;margin-top:.4rem;letter-spacing:.1em}
 
-/* ===== 祝福 ===== */
-#wish{
-  background:
-    radial-gradient(2px 2px at 25% 35%,rgba(246,234,210,.07),transparent 55%),
-    radial-gradient(2px 2px at 80% 70%,rgba(246,234,210,.07),transparent 55%),
-    radial-gradient(120% 110% at 50% 0%,var(--wine) 0%,var(--wine-dark) 55%,var(--wine-deep) 100%);
-}
-.wish-card{
-  max-width:680px;margin:0 auto;
-  background:var(--paper);padding:clamp(1.5rem,4vw,2.6rem);
-  box-shadow:var(--shadow-warm);
-}
-#wishForm{display:flex;flex-direction:column;gap:.9rem}
-#wishForm input,#wishForm textarea{
-  font-family:var(--font-serif);font-size:1rem;color:var(--ink);
-  background:rgba(255,255,255,.8);border:1px solid rgba(151,116,44,.62);
-  padding:.8rem 1rem;outline:none;transition:border-color .3s,box-shadow .3s;resize:vertical;
-}
-#wishForm input:focus,#wishForm textarea:focus{
-  border-color:var(--cinnabar);box-shadow:0 0 0 3px rgba(176,58,46,.12);
-}
-#wishForm input::placeholder,#wishForm textarea::placeholder{color:#8f8270}
-.btn-solid{
-  align-self:center;cursor:pointer;
-  padding:.8rem 2.6rem;border:none;border-radius:999px;
-  font-family:var(--font-kai);font-size:1.05rem;letter-spacing:.3em;text-indent:.3em;
-  color:#fff;background:linear-gradient(120deg,var(--cinnabar),var(--wine));
-  box-shadow:0 10px 24px rgba(122,31,31,.35);
-  transition:transform .3s var(--ease),box-shadow .3s var(--ease);
-}
-.btn-solid:hover{transform:translateY(-3px);box-shadow:0 16px 32px rgba(122,31,31,.42)}
-.btn-solid:active{transform:translateY(0)}
-.wish-list{list-style:none;margin-top:1.6rem;display:flex;flex-direction:column;gap:.8rem}
-.wish-item{
-  background:rgba(255,255,255,.72);border-left:3px solid var(--gold);
-  padding:.8rem 1.1rem;font-size:.95rem;color:var(--ink);
-  animation:wishIn .5s var(--ease) both;
-}
-.wish-item .wish-who{font-family:var(--font-kai);color:var(--cinnabar);font-size:.9rem;letter-spacing:.1em}
-.wish-item .wish-time{float:right;color:#a39682;font-size:.75rem}
-.wish-tip{margin-top:1rem;text-align:center;color:#a39682;font-size:.78rem;letter-spacing:.08em}
-@keyframes wishIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.wish-empty{text-align:center;color:#a39682;padding:1rem 0;font-size:.92rem}
-
 /* ===== 页脚 ===== */
 footer{
   text-align:center;color:#e6d6b4;padding:4.5rem 1.4rem 3.5rem;
